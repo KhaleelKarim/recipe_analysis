@@ -230,9 +230,9 @@ In the final model, I added the features of ``n_steps`` and ``n_ingredients`` wi
 
 Furthermore, I added in the nutritional ratings of ``calories``, ``sugar (PVD)``, and ``protein (PDV)``. I felt that these would improve my model's accuracy since they are all things people give weight to when deciding whether to make a recipe.
 
-Once again a random forest classifier was used, but employed optimal hyperparameters found through cross-validation. The optimal parameters were: [criterion='gini', max_depth=35, min_samples_split=50]
+Once again a random forest classifier was used, but employed optimal hyperparameters found through cross-validation. The optimal parameters were: [criterion='gini', max_depth=35, min_samples_split=25]
 
-This model also performed well on unseen data, with an F1-Score of approximately 0.8161, a significant increase from the baseline model.
+This model also performed well on unseen data, with an F1-Score of approximately 0.8553, a significant increase from the baseline model.
 
 ## Fariness Analysis
 

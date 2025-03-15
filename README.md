@@ -79,6 +79,8 @@ The final dataframe is made of 234151 rows and 26 columns! A description of the 
 | ``saturated fat (PDV)`` | saturated fat (PDV) | string |
 | ``carbohydrates (PDV)`` | carbohydrates (PDV) | string |
 
+---
+
 | name                                 |     id |   minutes | submitted           |   n_steps |   n_ingredients |          user_id |   rating |   recipe_avg_rating | era       | is_old_era   |   calories |   sugar (PDV) |   protein (PDV) |
 |:-------------------------------------|-------:|----------:|:--------------------|----------:|----------------:|-----------------:|---------:|--------------------:|:----------|:-------------|-----------:|--------------:|----------------:|
 | 1 brownies in the world    best ever | 333281 |        40 | 2008-10-27 00:00:00 |        10 |               9 | 386585           |        4 |                   4 | 2008-2012 | True         |      138.4 |            50 |               3 |
@@ -89,5 +91,40 @@ The final dataframe is made of 234151 rows and 26 columns! A description of the 
 
 ### Univariate Analysis
 
+Since we are concerned about time in this analysis, I plotted the distribution of minutes for the recipes. Despite my removing outliers, there is still a strong right tail to the data, but most of it is less than 100 minutes.
+
+<iframe
+  src="assets/minutes_dist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+---
+
+### Bivariate Analysis
+
+To learn more about the relationship between time and rating, we could plot the average ratings of all recipes on a boxplot conditioned by what era the recipe comes from. As we can see, the distribution of more recent recipes is slightly above!
+
+<iframe
+  src="assets/era_and_rating.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+---
+
+### Interesting Aggregates
+
+When aggregating by rating (the possible values are 1-5), we see uniform stats across the board, although it seems that as the rating goes up, the minutes decreases slightly
+
+|   rating |   minutes |   n_steps |   n_ingredients |
+|---------:|----------:|----------:|----------------:|
+|        1 |   79.1056 |  10.5423  |         9.17723 |
+|        2 |   96.9319 |  10.7599  |         9.2509  |
+|        3 |   75.9361 |   9.84942 |         9.18451 |
+|        4 |   73.1998 |   9.79256 |         9.27946 |
+|        5 |   72.5459 |  10.1221  |         9.18943 |
 
 

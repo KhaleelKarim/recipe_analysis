@@ -99,7 +99,6 @@ Since we are concerned about time in this analysis, I plotted the distribution o
   height="600"
   frameborder="0"
 ></iframe>
----
 ### Bivariate Analysis
 
 To learn more about the relationship between time and rating, we could plot the average ratings of all recipes on a boxplot conditioned by what era the recipe comes from. As we can see, the distribution of more recent recipes is slightly above!
@@ -109,7 +108,6 @@ To learn more about the relationship between time and rating, we could plot the 
   height="600"
   frameborder="0"
 ></iframe>
----
 ### Interesting Aggregates
 
 When aggregating by rating (the possible values are 1-5), we see uniform stats across the board, although it seems that as the rating goes up, the minutes decreases slightly
@@ -161,7 +159,6 @@ Significance Level: 0.05
   height="600"
   frameborder="0"
 ></iframe>
-
 P-Value: 0.0
 
 Conclusion: We reject the null in favor of the alternative, the missingness of description is MAR on n_ingredients
@@ -182,7 +179,6 @@ Significance Level: 0.05
   height="600"
   frameborder="0"
 ></iframe>
-
 P-Value: 0.622
 
 Conclusion: We keep the null, the missingness of description is MCAR on minutes
@@ -205,7 +201,6 @@ We run a permutation test here since we are curious if the two samples come from
   height="600"
   frameborder="0"
 ></iframe>
-
 P-value: 0.048
 
 At the 0.05 significance level, we reject the null hypothesis and find that the quality of a rating **is different** for earlier and later recipes!
@@ -253,7 +248,6 @@ I will split my data into 2 groups, long recipes and short recipes. For our purp
   height="600"
   frameborder="0"
 ></iframe>
-
 *P-Value*: 0.0
 
 At the 0.05 significance level, we reject the null hypothesis. Our model performs differently for recipes depending on how long they take to make!

@@ -211,3 +211,49 @@ P-value: 0.048
 At the 0.05 significance level, we reject the null hypothesis and find that the quality of a rating **is different** for earlier and later recipes!
 
 ## Framing a Prediction Problem
+
+We will be predicting the average ratings of recipes through classification. Although average ratings are a continuous category, we will round each one to the nearest whole number such that the only possible values are 1-5, which means we are doing multiclass classification.
+
+Our response variable in this case is ratings since it is useful to know how good a recipe will be when you can't look at any ratings. Our metric is F1-Score since the distribution of ratings is skewed right. We might see a misleading accuracy if our model just predicts higher ratings. 
+
+My models will use information from the following columns:
+["minutes", "submitted", "n_steps", "n_ingredients", "calories", "sugar (PDV)", "protein (PDV)"]. These are all fine to use since you have these values before any ratings come in, they are all available at time of prediction.
+
+## Baseline Model
+
+Using a random forest classifier, my baseline model will use information from ``submitted`` and ``minutes``, where they are both transformed using a quanitle transformer. This is because there are plenty of outliers present in both columns. Both columns are quantitative.
+
+After fitting the data, we tested the model's ability to generalize to unseen data and saw an F1-Score of approximately 0.7466. The current model is certainly better than guessing at random, but there is likely more to predicting the rating of a recipe!
+
+## Final Model
+
+In the final model, I added the features of ``n_steps`` and ``n_ingredients`` with a binarizer on each. The threshold was set to 8 and the idea is to split up recipes into long and short ones. More than 8 steps means the recipe is long, and so does more than 8 ingredients.
+
+Furthermore, I added in the nutritional ratings of ``calories``, ``sugar (PVD)``, and ``protein (PDV)``. I felt that these would improve my model's accuracy since they are all things people give weight to when deciding whether to make a recipe.
+
+Once again a random forest classifier was used, but employed optimal hyperparameters found through cross-validation. The optimal parameters were: [criterion='gini', max_depth=35, min_samples_split=50]
+
+This model also performed well on unseen data, with an F1-Score of approximately 0.8161, a significant increase from the baseline model.
+
+## Fariness Analysis
+
+I will split my data into 2 groups, long recipes and short recipes. For our purposes a long recipe will be anything longer than 35 minutes since that was the median time.
+
+*Null Hypothesis*: My final model performs the same on recipes shorter and longer than 35 minutes.
+
+*Alternative Hypothesis*: My final model performs differently on recipes shorter and longer than 35 minutes.
+
+*Test Statistic*: Absolute Difference in Means
+
+*Significance Level*: 0.05
+
+<iframe
+  src="assets/fairness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+*P-Value*: 0.0
+
+At the 0.05 significance level, we reject the null hypothesis. Our model performs differently for recipes depending on how long they take to make!

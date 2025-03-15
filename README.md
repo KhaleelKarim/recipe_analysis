@@ -99,22 +99,17 @@ Since we are concerned about time in this analysis, I plotted the distribution o
   height="600"
   frameborder="0"
 ></iframe>
-
 ---
-
 ### Bivariate Analysis
 
 To learn more about the relationship between time and rating, we could plot the average ratings of all recipes on a boxplot conditioned by what era the recipe comes from. As we can see, the distribution of more recent recipes is slightly above!
-
 <iframe
   src="assets/era_and_rating.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-
 ---
-
 ### Interesting Aggregates
 
 When aggregating by rating (the possible values are 1-5), we see uniform stats across the board, although it seems that as the rating goes up, the minutes decreases slightly
@@ -128,3 +123,91 @@ When aggregating by rating (the possible values are 1-5), we see uniform stats a
 |        5 |   72.5459 |  10.1221  |         9.18943 |
 
 
+## Assesment of Missingness
+
+### NMAR Analysis
+
+I believe the ``review`` column is NMAR. The only columns with missingness are ``tags``, ``description``, and ``review``
+
+#### tags
+- Is likely only missing if it's a basic recipe or the author was lazy/forgot
+- Proabable that it's MAR on ``minutes``, ``n_steps``, ``n_ingredients``
+
+#### description
+- Once again only left out if the recipe is that basic or if the author was lazy/forgot
+- Arguably MAR on the same columns ``tags`` would be
+
+#### review
+- Only missing if the actual review was solely the star rating or a photo
+- Since ``review`` is missing based on its actually value for the case of a photo, it supports the idea of NMAR
+- If a user only leaves a star rating it likely means they didn't feel very strongly about a dish, people will tend to actually write when the recipe was very good or very bad
+
+### Missingness Dependency
+Now, I went to determine the missingness of ``description`` based on various other columns. 
+
+**Missingness of description**
+
+*Null Hypothesis*: Missingness of description is MCAR on n_ingredients
+
+*Alternative Hypothesis*: Missingness of description is MAR on n_ingredients
+
+Test Statistic: Absolute Difference in Means
+
+Significance Level: 0.05
+
+<iframe
+  src="assets/ing_MAR.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+P-Value: 0.0
+
+Conclusion: We reject the null in favor of the alternative, the missingness of description is MAR on n_ingredients
+
+---
+
+*Null Hypothesis*: Missingness of description is MCAR on minutes
+
+*Alternative Hypothesis*: Missingness of description is MAR on minutes
+
+Test Statistic: Absolute Difference in Means
+
+Significance Level: 0.05
+
+<iframe
+  src="assets/min_MCAR.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+P-Value: 0.622
+
+Conclusion: We keep the null, the missingness of description is MCAR on minutes
+
+## Hypothesis Testing
+
+In order to learn more about the relationship between time and ratings, lets see if ratings from 2008-2012 follow the same distribution of ratings from 2013-2018.
+
+*Null Hypothesis*: Ratings from 2008-2012 are the same as ratings from 2013-2018.
+
+*Alternative Hypothesis*: Ratings from 2008-2012 are different from ratings from 2013-2018.
+
+Test Statistic: Absolute Difference in Means
+
+We run a permutation test here since we are curious if the two samples come from the same distribution. This is an important pair of hypotheses to test because it reveals if the era is significant at all to predicting rating.
+
+<iframe
+  src="assets/era_hyp.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+P-value: 0.048
+
+At the 0.05 significance level, we reject the null hypothesis and find that the quality of a rating **is different** for earlier and later recipes!
+
+## Framing a Prediction Problem

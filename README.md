@@ -37,11 +37,11 @@ The next dataset is called `interactions` and it contains 731927 rows of data re
 
 Both of these datasets have information about the recipe in common. I merged `recipes` and `interactions` into `full_recipes` so that there would be one row for each rating, but now there is added information about the recipe for which the rating was made.
 
-Wherever the ``rating`` column is 0, that means the user did not leave a star rating on the recipe. This means that their review consisted only of text or maybe a picture. Because of this, all 0's are replace with np.nans.
+Wherever the ``rating`` column is 0, that means the user did not leave a star rating on the recipe. This means that their review consisted only of text or maybe a picture. Because of this, all 0's are replaced with np.nans.
 
 To deal with the fact that there may be multiple rows for a single recipe and no central rating for a single recipe, the star ratings for each recipe are averaged out and placed in a new column ``recipe_avg_rating``.
 
-Some people decide not to add any tags to their recipe when they submit it, and the representation of that in the data is "['']" in the ``tags`` column. These are also replace with np.nans.
+Some people decide not to add any tags to their recipe when they submit it, and the representation of that in the data is "['']" in the ``tags`` column. These are also replaced with np.nans.
 
 It helps to have the various dates here converted to pandas Timestamps. This is done for both the ``date`` and ``submitted`` column. Furthermore, the ``submitted`` column is used to make another column called ``era``. This column categorizes dates into one of two categories, 2008-2012 or 2013-2018 depending on when the recipe was submitted. There is also a column called ``is_old_era`` which is full of booleans indicating if the recipe came from the 2008-2012 era.
 
@@ -149,9 +149,11 @@ Now, I went to determine the missingness of ``description`` based on various oth
 
 *Alternative Hypothesis*: Missingness of description is MAR on n_ingredients
 
-Test Statistic: Absolute Difference in Means
+*Test Statistic*: Absolute Difference in Means
 
-Significance Level: 0.05
+*Significance Level*: 0.05
+
+To determine the missingness, we consider the distributions of n_ingredients conditioned on the missingness of description. We run a permutation test to see if these distributions come from the same underlying distribution.
 
 <iframe
   src="assets/ing_MAR.html"
@@ -169,9 +171,11 @@ Conclusion: We reject the null in favor of the alternative, the missingness of d
 
 *Alternative Hypothesis*: Missingness of description is MAR on minutes
 
-Test Statistic: Absolute Difference in Means
+*Test Statistic*: Absolute Difference in Means
 
-Significance Level: 0.05
+*Significance Level*: 0.05
+
+To determine the missingness, we consider the distributions of minutes conditioned on the missingness of description. We run a permutation test to see if these distributions come from the same underlying distribution.
 
 <iframe
   src="assets/min_MCAR.html"
